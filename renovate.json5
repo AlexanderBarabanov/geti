@@ -26,9 +26,7 @@
     {
       enabled: false,
       groupName: "everything",
-      matchManagers: ["*"],
       matchPackagePatterns: ["*"],
-      separateMajorMinor: false,
     },
 
     {
