@@ -7,9 +7,9 @@
     "helpers:pinGitHubActionDigests", // pin Actions
   ],
 
-enabledManagers: ["dockerfile"],  
+  baseBranches: ["main"], // to support release branches, add here as well
 
-baseBranches: ["main"], // to support release branches, add here as well
+  // enabledManagers: ["dockerfile"],
 
   ignorePaths: [
     "web_ui/tests/**",
@@ -18,6 +18,7 @@ baseBranches: ["main"], // to support release branches, add here as well
   ],
 
   // enable vulnerable components upgrade
+
   vulnerabilityAlerts: {
     groupName: "Vulnerable dependencies",
     enabled: true,
@@ -25,11 +26,14 @@ baseBranches: ["main"], // to support release branches, add here as well
   osvVulnerabilityAlerts: true,
 
   packageRules: [
-  //  {
-   //   enabled: false,
-    //  groupName: "everything",
-     // matchPackagePatterns: ["*"],
-   // },
+
+    {
+      "groupName": "all-npm",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["*"],
+      "separateMajorMinor": false,
+      "enabled": false,
+    },
 
     {
       matchManagers: ["github-actions"],
@@ -71,7 +75,7 @@ baseBranches: ["main"], // to support release branches, add here as well
       matchPackageNames: ["gcr.io/distroless/static-debian12:nonroot"],
       // patch version upgrade only, major/minor version is updated manually
       // there is patch version in source code, so we can use this option
-      // matchUpdateTypes: ["digest"],
+      matchUpdateTypes: ["digest"],
       commitMessagePrefix: "Distroless:",
       enabled: true,
     },
@@ -87,7 +91,3 @@ baseBranches: ["main"], // to support release branches, add here as well
     },
   ],
 }
-
-//TODO:
-//debian:bookworm-slim
-//via ARG and makefile
