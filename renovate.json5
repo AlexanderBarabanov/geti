@@ -71,7 +71,7 @@ baseBranches: ["main"], // to support release branches, add here as well
       matchPackageNames: ["gcr.io/distroless/static-debian12:nonroot"],
       // patch version upgrade only, major/minor version is updated manually
       // there is patch version in source code, so we can use this option
-      matchUpdateTypes: ["digest"],
+      // matchUpdateTypes: ["digest"],
       commitMessagePrefix: "Distroless:",
       enabled: true,
     },
