@@ -24,12 +24,12 @@
 
   packageRules: [
     {
-      "enabled": false,
-      "groupName": "everything",
-      "matchManagers": ["*"],
-      "matchPackagePatterns": ["*"],
-      "separateMajorMinor": false
-    }
+      enabled: false,
+      groupName: "everything",
+      matchManagers: ["*"],
+      matchPackagePatterns: ["*"],
+      separateMajorMinor: false,
+    },
 
     {
       matchManagers: ["github-actions"],
