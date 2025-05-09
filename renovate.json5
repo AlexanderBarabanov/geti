@@ -1,0 +1,93 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    "config:base",
+    "group:all",
+    "docker:pinDigests", // pin container images
+    "helpers:pinGitHubActionDigests", // pin Actions
+  ],
+
+  baseBranches: ["main"], // to support release branches, add here as well
+
+  // enabledManagers: ["dockerfile"],
+
+  ignorePaths: [
+    "web_ui/tests/**",
+    "platform/services/account/docker-compose-debug.yml",
+    "platform/services/account/docker-compose.yml",
+  ],
+
+  // enable vulnerable components upgrade
+
+  vulnerabilityAlerts: {
+    groupName: "Vulnerable dependencies",
+    enabled: true,
+  },
+  osvVulnerabilityAlerts: true,
+
+  packageRules: [
+
+    {
+      "groupName": "all-npm",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["*"],
+      "separateMajorMinor": false,
+      "enabled": false,
+    },
+
+    {
+      matchManagers: ["github-actions"],
+      groupName: "GitHub actions",
+      enabled: true,
+    },
+
+    // Go base images
+    {
+      groupName: "Go base image update",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["golang"],
+
+      // patch version upgrade only, major/minor version is updated manually
+      // there is patch version in source code, so we can use this option
+      matchUpdateTypes: ["patch"],
+      commitMessagePrefix: "Golang:",
+      enabled: true,
+    },
+
+    // python base images upgrade
+    {
+      groupName: "Python base image update",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["python", "docker.io/python"],
+
+      // patch version upgrade only, major/minor version is updated manually
+      // we can use matchUpdateTypes: ["patch"] instead to avoid  hardcoded version
+      // but in this case patch version need to be provided in source code
+      allowedVersions: "3.10",
+      commitMessagePrefix: "Python:",
+      enabled: true,
+    },
+
+    // distroless base images
+    {
+      groupName: "Python base image update",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["gcr.io/distroless/static-debian12:nonroot"],
+      // patch version upgrade only, major/minor version is updated manually
+      // there is patch version in source code, so we can use this option
+      matchUpdateTypes: ["digest"],
+      commitMessagePrefix: "Distroless:",
+      enabled: true,
+    },
+
+    // astral-sh/uv image
+    {
+      groupName: "astral-sh image update",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["ghcr.io/astral-sh/uv"],
+      matchUpdateTypes: ["minor", "patch"],
+      commitMessagePrefix: "astral-sh:",
+      enabled: true,
+    },
+  ],
+}
