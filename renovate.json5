@@ -6,7 +6,7 @@
     "docker:pinDigests", // pin container images
     "helpers:pinGitHubActionDigests", // pin Actions
   ],
-  ignoreDeps: ["*"],
+
   baseBranches: ["main"], // to support release branches, add here as well
 
   ignorePaths: [
@@ -23,11 +23,13 @@
   osvVulnerabilityAlerts: true,
 
   packageRules: [
-//    {
-      // disable all other upgrades by default
-//      matchPackagePatterns: ["*"],
-//      enabled: false,
-//    },
+    {
+      "enabled": false,
+      "groupName": "everything",
+      "matchManagers": ["*"],
+      "matchPackagePatterns": ["*"],
+      "separateMajorMinor": false
+    }
 
     {
       matchManagers: ["github-actions"],
