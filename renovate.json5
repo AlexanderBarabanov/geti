@@ -7,7 +7,7 @@
     "helpers:pinGitHubActionDigests", // pin Actions
   ],
 
-enabledManagers": ["docker"],  
+enabledManagers: ["docker"],  
 
 baseBranches: ["main"], // to support release branches, add here as well
 
