@@ -7,7 +7,9 @@
     "helpers:pinGitHubActionDigests", // pin Actions
   ],
 
-  baseBranches: ["main"], // to support release branches, add here as well
+enabledManagers": ["docker"],  
+
+baseBranches: ["main"], // to support release branches, add here as well
 
   ignorePaths: [
     "web_ui/tests/**",
@@ -23,11 +25,11 @@
   osvVulnerabilityAlerts: true,
 
   packageRules: [
-    {
-      enabled: false,
-      groupName: "everything",
-      matchPackagePatterns: ["*"],
-    },
+  //  {
+   //   enabled: false,
+    //  groupName: "everything",
+     // matchPackagePatterns: ["*"],
+   // },
 
     {
       matchManagers: ["github-actions"],
