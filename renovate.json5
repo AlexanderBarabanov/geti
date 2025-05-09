@@ -23,11 +23,11 @@
   osvVulnerabilityAlerts: true,
 
   packageRules: [
-    {
+//    {
       // disable all other upgrades by default
-      matchPackagePatterns: ["*"],
-      enabled: false,
-    },
+//      matchPackagePatterns: ["*"],
+//      enabled: false,
+//    },
 
     {
       matchManagers: ["github-actions"],
