@@ -6,7 +6,7 @@
     "docker:pinDigests", // pin container images
     "helpers:pinGitHubActionDigests", // pin Actions
   ],
-  ignoreDeps": ["*"],
+  ignoreDeps: ["*"],
   baseBranches: ["main"], // to support release branches, add here as well
 
   ignorePaths: [
