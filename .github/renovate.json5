@@ -10,7 +10,7 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
 
-  extends: ["config:base", ":gitSignOff"],
+  extends: ["config:base", ":gitSignOff", "docker:pinDigests"],
   // https://docs.renovatebot.com/presets-default/#gitsignoff
 
   // if necessary, add supported releases branches here
@@ -63,6 +63,7 @@
     {
       enabled: true,
       matchDatasources: ["docker"],
+      matchUpdateTypes: ["digest"],
       pinDigests: true,
       groupName: "Pin dependencies",
       groupSlug: "pin-deps",
