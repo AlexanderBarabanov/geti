@@ -2,6 +2,7 @@
 //  1. Modify the Renovate configuration, which is located in .github/renovate.json5 and push your changes to the default branch of your fork.
 //  2. Enable the Renovate GitHub app in your GitHub account.
 //     Verify that Renovate is activated in the repository settings within the Renovate Dashboard.
+//     To enable the dashboard set `dependencyDashboard` to true
 //  3. Trigger the Renovate app from the dashboard, or push a new commit to your fork’s default branch to re-trigger Renovate.
 //  4. Use the dashboard to initiate Renovate and create a PR on your fork, then check that the proposed PRs are modifying the correct parts.
 //  5. Once you’ve validated that the Renovate configuration works on your fork, submit a PR to Geti,
@@ -19,7 +20,7 @@
   baseBranches: ["main"],
 
   // This ensures that the gitAuthor and gitSignOff fields match
-  gitAuthor: "test-renovate-bot-12345[bot] <211697243+test-renovate-bot-12345[bot]@users.noreply.github.com>", // TODO change
+  gitAuthor: "test-renovate-bot-12345[bot] <211697243+test-renovate-bot-12345[bot]@users.noreply.github.com>", // TODO change in target repo
 
   customManagers: [
     // Custom manager to support base image definition in web_ui\Makefile
@@ -139,5 +140,5 @@
     separateMinorPatch: false,
   },
   osvVulnerabilityAlerts: true,
-  dependencyDashboard: true, // TODO disable
+  dependencyDashboard: true, // TODO disable in target repo
 }

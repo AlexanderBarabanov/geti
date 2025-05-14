@@ -3,6 +3,9 @@ on:
   schedule:
     # Running every two hours on weekends (Saturday and Sunday)
     - cron: "0 */2 * * 6,0"
+    # Every 3 h, for testing purposes, TODO - disable in target repo
+    - cron: "0 */3 * * *"
+
   # allow to manually trigger this workflow
   workflow_dispatch:
     inputs:
