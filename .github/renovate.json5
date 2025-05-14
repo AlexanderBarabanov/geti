@@ -21,18 +21,18 @@
   // This ensures that the gitAuthor and gitSignOff fields match
   gitAuthor: "test-renovate-bot-12345[bot] <211697243+test-renovate-bot-12345[bot]@users.noreply.github.com>", // TODO change
 
-//  customManagers: [
+  customManagers: [
     // Custom manager to support base image definition in web_ui\Makefile
-//    {
-//      customType: "regex",
-//      datasourceTemplate: "docker",
-//      depNameTemplate: "public.ecr.aws/nginx/nginx",
-//      fileMatch: "^web_ui/Makefile$",
-//      matchStrings: [
-//       "DOCKER_BUILD_CONTEXT\\s+:=\\s+--build-context\\snginx_image=docker-image:\\/\\/(?<packageName>.+):(?<currentValue>.+)\\s\\\\",
-//      ],
-//   },
-//  ],
+    {
+      customType: "regex",
+      datasourceTemplate: "docker",
+      depNameTemplate: "public.ecr.aws/nginx/nginx",
+      fileMatch: "^web_ui/Makefile$",
+      matchStrings: [
+        "DOCKER_BUILD_CONTEXT\\s+:=\\s+--build-context\\snginx_image=docker-image:\\/\\/(?<packageName>.+):(?<currentValue>.+)\\s\\\\",
+      ],
+    },
+  ],
 
   enabledManagers: [
     "dockerfile",
@@ -40,7 +40,7 @@
     "gomod",
     "pep621",
     "npm",
- //   "custom.regex",
+    "custom.regex",
   ],
 
   // ignore Geti components
