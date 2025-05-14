@@ -1,0 +1,143 @@
+// [!] While updating the Renovate config, test changes on your own fork of Geti.
+//  1. Modify the Renovate configuration, which is located in .github/renovate.json5 and push your changes to the default branch of your fork.
+//  2. Enable the Renovate GitHub app in your GitHub account.
+//     Verify that Renovate is activated in the repository settings within the Renovate Dashboard.
+//  3. Trigger the Renovate app from the dashboard, or push a new commit to your fork’s default branch to re-trigger Renovate.
+//  4. Use the dashboard to initiate Renovate and create a PR on your fork, then check that the proposed PRs are modifying the correct parts.
+//  5. Once you’ve validated that the Renovate configuration works on your fork, submit a PR to Geti,
+//    and include links in the description to share details about the testing you've conducted.
+
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+
+  extends: ["config:base", ":gitSignOff"],
+  // https://docs.renovatebot.com/presets-default/#gitsignoff
+
+  // if necessary, add supported releases branches here
+  // it is possible to enable/disable specific upgrades per branch with
+  // `matchBaseBranches` in specific rule
+  baseBranches: ["main"],
+
+  // This ensures that the gitAuthor and gitSignOff fields match
+  gitAuthor: "test-renovate-bot-12345[bot] <211697243+test-renovate-bot-12345[bot]@users.noreply.github.com>", // TODO change
+
+  customManagers: [
+    // Custom manager to support base image definition in web_ui\Makefile
+    {
+      customType: "regex",
+      datasourceTemplate: "docker",
+      depNameTemplate: "public.ecr.aws/nginx/nginx",
+      fileMatch: "^web_ui/Makefile$",
+      matchStrings: [
+        "DOCKER_BUILD_CONTEXT\\s+:=\\s+--build-context\\snginx_image=docker-image:\\/\\/(?<packageName>.+):(?<currentValue>.+)\\s\\\\",
+      ],
+    },
+  ],
+
+  enabledManagers: [
+    "dockerfile",
+    "github-actions",
+    "gomod",
+    "pep621",
+    "npm",
+    "custom.regex",
+  ],
+
+  // ignore Geti components
+  ignoreDeps: [
+    "geti.com/iai_core",
+    "geti.com/modelmesh",
+    "geti.com/modelregistration",
+    "geti.com/predict",
+    "geti.com/account_service_grpc",
+    "geti.com/credit_system",
+  ],
+
+  // Set limit to 5
+  ignorePresets: [":prHourlyLimit2"],
+  prHourlyLimit: 5,
+
+  packageRules: [
+    // Enable pinning for container images
+    // https://docs.renovatebot.com/presets-docker/#dockerpindigests
+    {
+      enabled: true,
+      matchDatasources: ["docker"],
+      pinDigests: true,
+      groupName: "Pin dependencies",
+      groupSlug: "pin-deps",
+    },
+
+    // Disable non-security upgrades for go, python, npm
+    // and github-actions
+    // we will enable it in the next phase
+    {
+      enabled: false,
+      matchManagers: ["github-actions", "gomod", "pep621", "npm"],
+    },
+
+    // Disable non-security upgrades for uv, playwright
+    // and Dockerfile syntax (docker/dockerfile)
+    {
+      enabled: false,
+      matchDatasources: ["docker"],
+      matchDepNames: [
+        "mcr.microsoft.com/playwright",
+        "docker/dockerfile",
+        "ghcr.io/astral-sh/uv",
+      ],
+    },
+
+    // Disable python base image upgrades, except digital pinning,
+    // we will enable it in the next phase
+    {
+      enabled: false,
+      matchDatasources: ["docker"],
+      matchPackageNames: ["python"],
+      matchUpdateTypes: ["major", "minor", "patch"],
+    },
+
+    {
+      enabled: false,
+      matchDatasources: ["docker"],
+      matchPackageNames: ["docker.io/python"],
+      matchUpdateTypes: ["major", "minor", "patch"],
+    },
+
+    // Disable golang base image upgrades, except digital pinning,
+    // we will enable it in the next phase
+    {
+      enabled: false,
+      matchDatasources: ["docker"],
+      matchPackageNames: ["golang"],
+      matchUpdateTypes: ["major", "minor", "patch"],
+    },
+
+    // Disable public.ecr.aws/nginx/nginx base image upgrades, except digital pinning,
+    // we will enable it in the next phase
+    {
+      enabled: false,
+      matchDatasources: ["docker"],
+      matchPackageNames: ["public.ecr.aws/nginx/nginx"],
+      matchUpdateTypes: ["major", "minor", "patch"],
+    },
+
+    // Disable upgrades for non production images
+    {
+      enabled: false,
+      matchDatasources: ["docker"],
+      matchFileNames: ["**/Dockerfile.protoc"],
+    },
+  ],
+
+  // Enable security upgrades
+  vulnerabilityAlerts: {
+    groupName: "Security upgrades",
+    groupSlug: "security-fix-deps",
+    enabled: true,
+    separateMajorMinor: false,
+    separateMinorPatch: false,
+  },
+  osvVulnerabilityAlerts: true,
+  dependencyDashboard: true, // TODO disable
+}
