@@ -63,7 +63,6 @@
     {
       enabled: true,
       matchDatasources: ["docker"],
-      matchUpdateTypes: ["digest"],
       pinDigests: true,
       groupName: "Pin dependencies",
       groupSlug: "pin-deps",
