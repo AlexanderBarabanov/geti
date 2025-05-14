@@ -29,7 +29,7 @@
       depNameTemplate: "public.ecr.aws/nginx/nginx",
       fileMatch: "^web_ui/Makefile$",
       matchStrings: [
-        "DOCKER_BUILD_CONTEXT\\s+:=\\s+--build-context\\snginx_image=docker-image:\\/\\/(?<packageName>.+):(?<currentValue>.+)\\s\\\\",
+        "DOCKER_BUILD_CONTEXT\\s+:=\\s+--build-context\\snginx_image=docker-image:\\/\\/(?<packageName>.+):(?<currentValue>.+)@(?<currentDigest>sha256:[0-9a-f]+)\\s\\\\",
       ],
     },
   ],
