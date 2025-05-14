@@ -4,7 +4,7 @@
 include ../Makefile.shared
 
 # build contexts for web-ui image
-DOCKER_BUILD_CONTEXT := --build-context nginx_image=docker-image://public.ecr.aws/nginx/nginx:1.27-bookworm@sha256:a7e93a17f34b60c14844c4e4ea22ea463036a3e835ad90f882fbecc9b88592a0 \
+DOCKER_BUILD_CONTEXT := --build-context nginx_image=docker-image://public.ecr.aws/nginx/nginx:1.27-bookworm@sha256:b0f37fc8150debf1522425221641b6839c0952cdfc6b44b4bb749b70305daabd \
 						--build-context node_image=docker-image://public.ecr.aws/docker/library/node:22.12-bookworm-slim \
 						--build-context docs_context=../docs \
 						--build-context api_context=../interactive_ai/services/api
