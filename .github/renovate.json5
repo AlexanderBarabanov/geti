@@ -39,6 +39,18 @@
   // Set limit to 5
   ignorePresets: [":prHourlyLimit2"],
   prHourlyLimit: 5,
+  ignorePaths: [], // to include tests folders as well for security upgrades
+
+  // Enable security upgrades, group it in one PR
+  vulnerabilityAlerts: {
+    groupName: "Security upgrades",
+    groupSlug: "security-fix-deps",
+    enabled: true,
+    separateMajorMinor: false,
+    separateMinorPatch: false,
+  },
+  osvVulnerabilityAlerts: true,
+  dependencyDashboard: true,
 
   packageRules: [
     // Enable pinning for container images
@@ -123,17 +135,11 @@
       matchDatasources: ["docker"],
       matchFileNames: ["**/Dockerfile.protoc"],
     },
-  ],
 
-  // Enable security upgrades, group it in one PR
-  vulnerabilityAlerts: {
-    groupName: "Security upgrades",
-    groupSlug: "security-fix-deps",
-    enabled: true,
-    separateMajorMinor: false,
-    separateMinorPatch: false,
-    ignorePaths: [], // to include tests folders as well
-  },
-  osvVulnerabilityAlerts: true,
-  dependencyDashboard: true,
+    {
+      matchPackageNames: ["requests"],
+      allowedVersions: "2.31.0",
+      matchDatasources: ["pypi"],
+    },
+  ],
 }
