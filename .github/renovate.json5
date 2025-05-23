@@ -39,7 +39,6 @@
   // Set limit to 5
   ignorePresets: [":prHourlyLimit2"],
   prHourlyLimit: 5,
-  ignorePaths: [], // to include tests folders as well
 
   packageRules: [
     // Enable pinning for container images
@@ -133,6 +132,7 @@
     enabled: true,
     separateMajorMinor: false,
     separateMinorPatch: false,
+    ignorePaths: [], // to include tests folders as well
   },
   osvVulnerabilityAlerts: true,
   dependencyDashboard: true,
