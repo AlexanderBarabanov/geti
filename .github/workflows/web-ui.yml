@@ -7,13 +7,7 @@ on:
         description: "Docker image tag"
         type: string
         required: true
-    secrets:
-      AWS_ROLE:
-        required: true
-      AWS_REGION:
-        required: true
-      REGISTRY:
-        required: true
+
 
 permissions: {} # No permissions by default on workflow level
 
@@ -211,11 +205,6 @@ jobs:
     needs: [lint, unit-tests, merge-playwright-reports]
     permissions:
       contents: read # to checkout code
-      id-token: write # is required by nested component-check
-    secrets:
-      AWS_ROLE: ${{ secrets.AWS_ROLE }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-      REGISTRY: ${{ secrets.REGISTRY }}
     uses: ./.github/workflows/component.yml
     with:
       image-tag: ${{ inputs.image-tag }}

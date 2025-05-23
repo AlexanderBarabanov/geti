@@ -11,13 +11,6 @@ on:
         description: "Docker image tag"
         type: string
         required: true
-    secrets:
-      AWS_ROLE:
-        required: true
-      AWS_REGION:
-        required: true
-      REGISTRY:
-        required: true
   workflow_dispatch:
     inputs:
       branch:
@@ -43,7 +36,6 @@ jobs:
     timeout-minutes: 30
     env:
       TAG: ${{ inputs.image-tag || github.sha }}
-      REGISTRY: ${{ secrets.REGISTRY }}
       PYTHON_BUILDER_IMAGE: builder-images/python-builder:v0.1
       GO_BUILDER_IMAGE: builder-images/go-builder:v0.1
     steps:
@@ -52,17 +44,6 @@ jobs:
         with:
           persist-credentials: false
           ref: ${{ inputs.branch || '' }}
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE }}
-          role-session-name: Github
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 # v2.0.1
 
       - name: Check if Python/Go project
         id: check-python-go
