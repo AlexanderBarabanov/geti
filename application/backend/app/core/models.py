@@ -14,7 +14,7 @@ class HasID(ABC, BaseModel):
 
 
 class RequiresID(ABC, BaseModel):
-    """Mixin: Required UUID field."""
+    """Mixin: Required UUID field test."""
 
     id: UUID = Field(..., description="Unique identifier")
 
