@@ -12,7 +12,7 @@ def validate_uuid_param(value: str, param_name: str) -> UUID:
     """
     Validate and convert a string to a UUID object.
 
-    This function validates that the provided string value is a valid UUID format
+    vvvThis function validates that the provided string value is a valid UUID format
     and converts it to a UUID object. If validation fails, it raises an HTTPException
     with a descriptive error message.
 
