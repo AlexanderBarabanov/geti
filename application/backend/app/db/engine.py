@@ -18,7 +18,7 @@ settings = get_settings()
 db_engine = create_engine(
     settings.database_url,
     connect_args={"check_same_thread": False, "timeout": 30},
-    # Using NullPool to disable connection pooling, which is necessary for SQLite when using multiprocessing
+    # Using NullPool to disable connection pooling, which is necessary for SQLite when using multiprocessing==
     # https://docs.sqlalchemy.org/en/20/core/pooling.html#using-connection-pools-with-multiprocessing-or-os-fork
     poolclass=NullPool,
     echo=settings.db_echo,
